@@ -19,3 +19,12 @@ A small window that remains visible while working in other applications (coding,
 - Adjustable opacity, background customization (gradients, transparency)
 - Minimal/frameless appearance
 - Quick show/hide, minimize to system tray, global keyboard shortcut
+
+### Full Workspace Mode
+Expands the floating window into a full application containing:
+- Today (Daily tasks)
+- Notes
+- Tasks
+- Planner
+- Pinned items
+- Settings
