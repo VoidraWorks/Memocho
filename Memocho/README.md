@@ -35,3 +35,9 @@ A simple, Tweek-inspired daily planning system.
 - Move tasks between dates.
 - View today's and upcoming tasks.
 - *Intentionally simple (not a Jira/Notion/Trello clone).*
+
+## 📝 Notes
+Usable in both floating and full workspace modes.
+- Title, Text/rich text, Markdown support, Checklists, Tags, Pinning, Search
+- Automatic saving
+- **Notes → Tasks:** Seamlessly convert items in a note into actionable daily tasks.
