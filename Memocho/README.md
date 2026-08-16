@@ -75,3 +75,8 @@ Usable in both floating and full workspace modes.
                        │
                   Cloudflare D1
 ```
+
+## 🚀 Performance Requirements
+Performance is a first-class feature designed to work smoothly across low-end to high-end PCs.
+- **Prioritize:** Low RAM/CPU usage, fast startup, fast UI interactions, minimal background processes, offline resilience.
+- **Avoid:** Heavy libraries, Electron, large UI frameworks, unnecessary animations/polling/network requests. The app should consume almost no CPU when idle.
