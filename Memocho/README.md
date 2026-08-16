@@ -28,3 +28,10 @@ Expands the floating window into a full application containing:
 - Planner
 - Pinned items
 - Settings
+
+## ✅ Daily To-Do System
+A simple, Tweek-inspired daily planning system.
+- Create, complete, reorder, assign dates, set priorities, and add descriptions to tasks.
+- Move tasks between dates.
+- View today's and upcoming tasks.
+- *Intentionally simple (not a Jira/Notion/Trello clone).*
