@@ -41,3 +41,16 @@ Usable in both floating and full workspace modes.
 - Title, Text/rich text, Markdown support, Checklists, Tags, Pinning, Search
 - Automatic saving
 - **Notes → Tasks:** Seamlessly convert items in a note into actionable daily tasks.
+
+## 🛠️ Technology Stack
+
+- **Desktop Framework:** Tauri 2 (No Electron)
+- **Native/Desktop Layer (Rust):** Handles window management (always-on-top, positioning, resizing), global shortcuts, system tray, local persistence/cache.
+- **Frontend:** React + TypeScript
+- **Styling:** Tailwind CSS
+- **State Management:** Zustand
+- **Editor:** TipTap (if rich-text is needed)
+- **Build Tool:** Vite
+- **Cloud Backend:** Cloudflare Workers (exposes the API)
+- **Database:** Cloudflare D1
+- **Local-first support:** Lightweight local cache/state so interaction remains fast and offline-resilient.
