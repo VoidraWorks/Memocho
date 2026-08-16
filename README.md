@@ -448,11 +448,3 @@ Add a task.
 Expand it when you need more space.
 
 Then get back to work.
-
----
-
-## Authors
-
-**Nirvan Jain** — [GitHub: @NirvanJain]
-
-Memocho is an independent project focused on building a fast, minimal, and useful Windows productivity experience.
