@@ -405,3 +405,54 @@ The initial version focuses on the essential experience:
 * [ ] Global shortcut
 
 ---
+
+# Future Possibilities
+
+Once the core experience is stable, Memocho can potentially expand with:
+
+* Calendar integrations
+* Google Calendar synchronization
+* Reminders
+* Notifications
+* Multiple workspaces
+* Import / export
+* Markdown export
+* Clipboard integration
+* Pomodoro timer
+* Quick capture
+* Mobile companion
+* AI-powered organization
+
+These should remain optional and should never compromise the lightweight nature of the core application.
+
+---
+
+# Product Vision
+
+Memocho is not intended to become another giant productivity platform.
+
+Its purpose is much simpler:
+
+> **Give users a small workspace that is always there when they need it.**
+
+Open it.
+
+Write something down.
+
+Pin it.
+
+Continue working.
+
+Add a task.
+
+Expand it when you need more space.
+
+Then get back to work.
+
+---
+
+## Authors
+
+**Nirvan Jain** — [GitHub: @NirvanJain]
+
+Memocho is an independent project focused on building a fast, minimal, and useful Windows productivity experience.
