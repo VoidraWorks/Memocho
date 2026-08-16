@@ -54,3 +54,24 @@ Usable in both floating and full workspace modes.
 - **Cloud Backend:** Cloudflare Workers (exposes the API)
 - **Database:** Cloudflare D1
 - **Local-first support:** Lightweight local cache/state so interaction remains fast and offline-resilient.
+
+## 🏗️ Architecture
+
+```text
+                    Windows
+                       │
+                    Tauri 2
+                 ┌─────┴─────┐
+                 │           │
+              React        Rust
+                 │           │
+                 └─────┬─────┘
+                       │
+                Local state/cache
+                       │
+                    HTTPS
+                       │
+              Cloudflare Worker
+                       │
+                  Cloudflare D1
+```
