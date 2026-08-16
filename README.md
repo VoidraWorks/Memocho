@@ -448,3 +448,9 @@ Add a task.
 Expand it when you need more space.
 
 Then get back to work.
+
+---
+## Author
+
+**Nirvan Jain**  
+[GitHub Profile](https://github.com/NirvanJain)
