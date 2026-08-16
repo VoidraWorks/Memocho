@@ -86,3 +86,7 @@ Inspired by Apple's simplicity without copying their UI.
 - Minimal, calm, premium, modern, clean, and lightweight.
 - Lots of whitespace, subtle borders, small rounded corners, clean typography, minimal icons, subtle shadows/gradients.
 - *Avoid:* Clutter, excessive colors, large dashboards, enterprise-style interfaces.
+
+## 🌓 Themes & Windows Integration
+- Light/Dark mode, custom backgrounds, gradients, opacity, font sizing.
+- Native Windows integration: minimize to tray, start with Windows, remember window position/dimensions/opacity/appearance.
