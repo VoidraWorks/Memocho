@@ -297,3 +297,111 @@ Memocho should always be easy to access while working.
 ### Customizable
 
 Users should be able to make their workspace feel like their own.
+
+### Local-first
+
+The application should feel fast locally and synchronize in the background.
+
+### Native
+
+Memocho should feel like a real Windows utility rather than a website packaged as an application.
+
+---
+
+# Visual Style
+
+Memocho uses a clean, calm, minimal visual language.
+
+The design focuses on:
+
+* Generous whitespace
+* Subtle borders
+* Soft rounded corners
+* Clean typography
+* Minimal icons
+* Subtle shadows
+* Restrained gradients
+* Optional transparency
+* Smooth, lightweight transitions
+
+Available themes:
+
+* Light
+* Dark
+* System
+
+Users can also customize aspects of their floating workspace such as:
+
+* Background
+* Gradient
+* Op opacity
+* Font size
+* Window appearance
+
+---
+
+# Project Structure
+
+A high-level structure:
+
+```text
+memocho/
+│
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── hooks/
+│   ├── stores/
+│   ├── services/
+│   ├── types/
+│   └── App.tsx
+│
+├── src-tauri/
+│   ├── src/
+│   │   ├── commands/
+│   │   ├── window/
+│   │   ├── shortcuts/
+│   │   └── main.rs
+│   │
+│   └── tauri.conf.json
+│
+├── worker/
+│   ├── src/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── middleware/
+│   │   ├── db/
+│   │   └── index.ts
+│   │
+│   └── wrangler.toml
+│
+├── package.json
+└── README.md
+```
+
+The frontend, native desktop layer, and cloud backend should remain clearly separated.
+
+---
+
+# MVP
+
+The initial version focuses on the essential experience:
+
+* [ ] Floating notes
+* [ ] Expandable full workspace
+* [ ] Always-on-top
+* [ ] Move and resize window
+* [ ] Opacity control
+* [ ] Background customization
+* [ ] Gradient customization
+* [ ] Notes
+* [ ] Daily tasks
+* [ ] Basic planner
+* [ ] Pinned items
+* [ ] Local-first state
+* [ ] Cloud synchronization
+* [ ] Light / dark mode
+* [ ] System tray
+* [ ] Global shortcut
+
+---
