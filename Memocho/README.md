@@ -100,3 +100,7 @@ The initial application focuses on:
 - Light/dark mode, System tray, Global shortcut
 
 Future features (calendar integrations, AI, reminders, etc.) should be architecturally possible but won't complicate the MVP.
+
+## 👨‍💻 Author
+
+- GitHub: [NirvanJain](https://github.com/NirvanJain)
