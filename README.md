@@ -97,3 +97,102 @@ Notes support:
 * Pinning
 * Search
 * Automatic saving
+
+---
+
+### Notes → Tasks
+
+Memocho connects notes and tasks.
+
+For example:
+
+```text
+Project Ideas
+
+- Fix authentication
+- Write tests
+- Deploy API
+```
+
+can quickly become:
+
+```text
+TODAY
+
+□ Fix authentication
+□ Write tests
+□ Deploy API
+```
+
+This keeps planning connected to the things you're already writing down.
+
+---
+
+## Performance First
+
+Performance is one of Memocho's core principles.
+
+Memocho is designed to run smoothly on:
+
+* Low-end Windows laptops
+* Older machines
+* Mid-range PCs
+* High-end systems
+
+The application aims for:
+
+* Fast startup
+* Low RAM usage
+* Minimal CPU usage while idle
+* Minimal background activity
+* Offline resilience
+* Fast local interactions
+* Efficient cloud synchronization
+
+The app should feel like a **small desktop utility**, not a heavy productivity suite.
+
+---
+
+# Tech Stack
+
+## Desktop
+
+**Tauri 2**
+
+Provides the lightweight Windows desktop application layer.
+
+Tauri is preferred over Electron to keep the application smaller and more resource-efficient.
+
+## Native Layer
+
+**Rust**
+
+Used for native desktop functionality such as:
+
+* Window management
+* Always-on-top behavior
+* Window positioning
+* Global shortcuts
+* System tray
+* Native Windows integration
+* Local persistence where required
+
+## Frontend
+
+**React + TypeScript**
+
+Used to build the application interface and workspace.
+
+## Build Tool
+
+**Vite**
+
+Used for fast frontend development and builds.
+
+## Styling
+
+**Tailwind CSS**
+
+Used for the minimal and customizable design system.
+
+## State Management
