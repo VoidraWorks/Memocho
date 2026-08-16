@@ -80,3 +80,9 @@ Usable in both floating and full workspace modes.
 Performance is a first-class feature designed to work smoothly across low-end to high-end PCs.
 - **Prioritize:** Low RAM/CPU usage, fast startup, fast UI interactions, minimal background processes, offline resilience.
 - **Avoid:** Heavy libraries, Electron, large UI frameworks, unnecessary animations/polling/network requests. The app should consume almost no CPU when idle.
+
+## 🎨 Visual Design
+Inspired by Apple's simplicity without copying their UI.
+- Minimal, calm, premium, modern, clean, and lightweight.
+- Lots of whitespace, subtle borders, small rounded corners, clean typography, minimal icons, subtle shadows/gradients.
+- *Avoid:* Clutter, excessive colors, large dashboards, enterprise-style interfaces.
