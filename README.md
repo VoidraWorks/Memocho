@@ -196,3 +196,104 @@ Used for fast frontend development and builds.
 Used for the minimal and customizable design system.
 
 ## State Management
+
+**Zustand**
+
+Used for lightweight application state management.
+
+## Editor
+
+**TipTap / lightweight editor**
+
+Used for notes and rich-text functionality where necessary.
+
+The editor should remain lightweight and should not introduce unnecessary complexity.
+
+## Backend
+
+**Cloudflare Workers**
+
+Provides the API layer between Memocho and the cloud database.
+
+## Database
+
+**Cloudflare D1**
+
+Stores synchronized application data such as:
+
+* Notes
+* Tasks
+* Planner data
+* User settings
+
+## Architecture
+
+```text
+                    MEMOCHO
+                       │
+                 ┌─────┴─────┐
+                 │           │
+              React        Rust
+           TypeScript       │
+                 │           │
+                 └─────┬─────┘
+                       │
+                Tauri 2 Desktop
+                       │
+                 Local-first
+                  data/state
+                       │
+                     HTTPS
+                       │
+              Cloudflare Worker
+                       │
+                  Cloudflare D1
+```
+
+---
+
+# Local-First Architecture
+
+Memocho should feel instant regardless of network quality.
+
+Normal interactions should happen locally first:
+
+```text
+User action
+    ↓
+Local state
+    ↓
+UI updates immediately
+    ↓
+Background synchronization
+    ↓
+Cloudflare Worker
+    ↓
+Cloudflare D1
+```
+
+The application should **never depend on a network request for every keystroke or interaction**.
+
+This allows Memocho to remain useful even when the user has a slow or unreliable internet connection.
+
+---
+
+# Design Philosophy
+
+Memocho follows a simple design philosophy:
+
+### Minimal
+
+Every element should have a purpose.
+
+### Lightweight
+
+Performance should never be sacrificed unnecessarily for features.
+
+### Persistent
+
+Memocho should always be easy to access while working.
+
+### Customizable
+
+Users should be able to make their workspace feel like their own.
