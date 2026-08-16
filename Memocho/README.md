@@ -90,3 +90,13 @@ Inspired by Apple's simplicity without copying their UI.
 ## 🌓 Themes & Windows Integration
 - Light/Dark mode, custom backgrounds, gradients, opacity, font sizing.
 - Native Windows integration: minimize to tray, start with Windows, remember window position/dimensions/opacity/appearance.
+
+## 🎯 MVP Scope
+The initial application focuses on:
+- Floating notes & Full workspace
+- Notes & Daily tasks
+- Always-on-top, Window resizing/moving, Opacity, Background/gradient
+- Local state & Cloud synchronization
+- Light/dark mode, System tray, Global shortcut
+
+Future features (calendar integrations, AI, reminders, etc.) should be architecturally possible but won't complicate the MVP.
