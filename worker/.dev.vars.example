@@ -1,0 +1,10 @@
+# ─── Worker local secrets ─────────────────────────────────────────────────────
+# This file is read by `wrangler dev` for local development.
+# NEVER commit this file — it is in .gitignore.
+#
+# Generate a strong JWT secret (PowerShell):
+#   [System.Convert]::ToBase64String([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(48))
+#
+# Then paste the result below:
+
+JWT_SECRET=replace-with-a-strong-random-base64-secret-at-least-32-bytes
