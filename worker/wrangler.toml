@@ -1,0 +1,45 @@
+name = "memocho-api"
+main = "src/index.ts"
+compatibility_date = "2024-12-05"
+compatibility_flags = ["nodejs_compat"]
+
+# ── D1 Database binding ──────────────────────────────────────────────────────
+[[d1_databases]]
+binding = "DB"
+database_name = "memocho-db"
+database_id = "replace-with-your-d1-database-id"
+migrations_dir = "db/migrations"
+
+# ── Environment variables (non-secret) ──────────────────────────────────────
+[vars]
+ENVIRONMENT = "development"
+# CORS allowed origin — set to your Tauri app origin or "*" for dev
+CORS_ORIGIN = "*"
+# JWT access token expiry (seconds)
+JWT_ACCESS_TTL = "900"
+# JWT refresh token expiry (seconds)
+JWT_REFRESH_TTL = "2592000"
+
+# Secrets (set via: wrangler secret put JWT_SECRET)
+# JWT_SECRET      — at least 32 random bytes, base64-encoded
+
+# ── Local development ────────────────────────────────────────────────────────
+[dev]
+port = 8787
+local_protocol = "http"
+
+# ── Production environment ───────────────────────────────────────────────────
+[env.production]
+name = "memocho-api-prod"
+
+[env.production.vars]
+ENVIRONMENT = "production"
+CORS_ORIGIN = "tauri://localhost"
+JWT_ACCESS_TTL = "900"
+JWT_REFRESH_TTL = "2592000"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "memocho-db"
+database_id = "replace-with-your-d1-database-id"
+migrations_dir = "db/migrations"
