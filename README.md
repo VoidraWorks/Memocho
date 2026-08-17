@@ -18,6 +18,7 @@ Memocho takes a different approach.
 
 It stays with you.
 
+
 Whether you're coding in VS Code, browsing the web, studying, or working on a project, Memocho can remain as a small floating workspace on your screen.
 
 When you need more functionality, simply expand it.
