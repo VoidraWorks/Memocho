@@ -186,3 +186,48 @@
   .slide-in-from-top-1     { animation-name: slide-in-from-top-1; }
   .duration-fast           { animation-duration: 100ms; }
 }
+
+/* ── Sticky note window styles ────────────────────────────────────────────── */
+.sticky-editor .ProseMirror {
+  outline: none;
+  min-height: 80px;
+}
+
+.sticky-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  opacity: 0.4;
+  pointer-events: none;
+  height: 0;
+}
+
+.sticky-editor .ProseMirror p { margin: 0.25em 0; line-height: 1.6; }
+.sticky-editor .ProseMirror h1 { font-size: 1.15em; font-weight: 700; margin: 0.5em 0 0.2em; }
+.sticky-editor .ProseMirror h2 { font-size: 1.05em; font-weight: 600; margin: 0.4em 0 0.15em; }
+.sticky-editor .ProseMirror h3 { font-size: 1em; font-weight: 600; margin: 0.3em 0 0.1em; }
+
+.sticky-editor .ProseMirror code {
+  font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+  font-size: 0.85em;
+  background: rgba(0,0,0,0.06);
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+.sticky-editor .ProseMirror ul, .sticky-editor .ProseMirror ol { padding-left: 1.2em; margin: 0.2em 0; }
+.sticky-editor .ProseMirror li { margin: 0.1em 0; line-height: 1.5; }
+
+.sticky-editor .ProseMirror ul[data-type="taskList"] { list-style: none; padding-left: 0; }
+.sticky-editor .ProseMirror ul[data-type="taskList"] li { display: flex; align-items: flex-start; gap: 0.4em; }
+.sticky-editor .ProseMirror ul[data-type="taskList"] li > label { flex-shrink: 0; margin-top: 0.1em; }
+.sticky-editor .ProseMirror ul[data-type="taskList"] li > div { flex: 1; }
+
+.sticky-editor .ProseMirror hr { border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 0.5em 0; }
+
+.sticky-editor .ProseMirror blockquote {
+  border-left: 2px solid rgba(0,0,0,0.15);
+  padding-left: 0.6em;
+  opacity: 0.7;
+  font-style: italic;
+  margin: 0.3em 0;
+}
