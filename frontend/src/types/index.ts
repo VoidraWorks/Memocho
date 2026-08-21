@@ -3,6 +3,7 @@
 export type ThemeMode = "light" | "dark" | "system";
 export type Priority = "none" | "low" | "medium" | "high";
 export type NavSection = "today" | "notes" | "tasks" | "planner" | "pinned" | "settings";
+export type StickyColor = "yellow" | "rose" | "sky" | "emerald" | "violet" | "amber";
 
 // ─── Task ─────────────────────────────────────────────────────────────────────
 
@@ -31,11 +32,12 @@ export interface Note {
   preview: string; // Plain-text preview (first ~120 chars)
   pinned: boolean;
   tags: string[];
+  color?: StickyColor;
   createdAt: string;
   updatedAt: string;
 }
 
-export type CreateNoteInput = Pick<Note, "title"> & Partial<Pick<Note, "content" | "tags">>;
+export type CreateNoteInput = Pick<Note, "title"> & Partial<Pick<Note, "content" | "tags" | "color">>;
 export type UpdateNoteInput = Partial<Omit<Note, "id" | "createdAt">>;
 
 // ─── Settings ─────────────────────────────────────────────────────────────────
