@@ -11,7 +11,6 @@ import {
   List, ListOrdered, CheckSquare, Minus, Cloud, CloudOff,
   Pin, Trash2, StickyNote,
 } from "lucide-react";
-import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { cn } from "../../lib/cn";
 import { Tooltip } from "../ui/Tooltip";
 import type { Note } from "../../types";
@@ -172,7 +171,8 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
         )}
         {/* Note actions */}
         <button
-          onClick={() => {
+          onClick={async () => {
+            const { WebviewWindow } = await import("@tauri-apps/api/webviewWindow");
             new WebviewWindow(`sticky-${note.id}`, {
               url: `#${note.id}`,
               title: note.title || "Sticky Note",
