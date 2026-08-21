@@ -9,8 +9,9 @@ import CodeBlock from "@tiptap/extension-code-block";
 import {
   Bold, Italic, Code2, Heading1, Heading2, Heading3,
   List, ListOrdered, CheckSquare, Minus, Cloud, CloudOff,
-  Pin, Trash2,
+  Pin, Trash2, StickyNote,
 } from "lucide-react";
+import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { cn } from "../../lib/cn";
 import { Tooltip } from "../ui/Tooltip";
 import type { Note } from "../../types";
@@ -170,6 +171,27 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
           </div>
         )}
         {/* Note actions */}
+        <button
+          onClick={() => {
+            new WebviewWindow(`sticky-${note.id}`, {
+              url: `#${note.id}`,
+              title: note.title || "Sticky Note",
+              width: 320,
+              height: 360,
+              minWidth: 240,
+              minHeight: 200,
+              decorations: false,
+              transparent: true,
+              alwaysOnTop: true,
+              resizable: true,
+              center: false,
+            });
+          }}
+          className="ml-2 w-6 h-6 flex items-center justify-center rounded-md text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 hover:text-surface-600 dark:hover:text-surface-300 transition-all"
+          title="Open as sticky note"
+        >
+          <StickyNote size={12} />
+        </button>
         <button
           onClick={() => onTogglePin(note.id)}
           className={cn(
