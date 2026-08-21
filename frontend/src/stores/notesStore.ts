@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { emit } from "@tauri-apps/api/event";
 import { notesService } from "../services/notes";
 import type { Note, CreateNoteInput, UpdateNoteInput } from "../types";
 
@@ -54,6 +55,8 @@ export const useNotesStore = create<NotesState>((set) => ({
       notes: s.notes.filter((n) => n.id !== id),
       currentNoteId: s.currentNoteId === id ? null : s.currentNoteId,
     }));
+    // Notify sticky windows to close
+    emit("note-deleted", { noteId: id });
   },
 
   togglePin: (id) => {
