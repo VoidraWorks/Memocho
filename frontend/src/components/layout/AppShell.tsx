@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
+import { ErrorBoundary } from "../ui/ErrorBoundary";
 import { useUIStore } from "../../stores/uiStore";
 import type { NavSection } from "../../types";
 
@@ -55,9 +56,11 @@ export const AppShell: React.FC = () => {
 
         {/* Page content */}
         <main className="flex-1 min-h-0 overflow-hidden">
-          <Suspense fallback={<LoadingFallback />}>
-            {PAGE_MAP[activeSection]}
-          </Suspense>
+          <ErrorBoundary key={activeSection}>
+            <Suspense fallback={<LoadingFallback />}>
+              {PAGE_MAP[activeSection]}
+            </Suspense>
+          </ErrorBoundary>
         </main>
       </div>
     </div>
