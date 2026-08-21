@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Pin, Trash2, Tag, MoreVertical } from "lucide-react";
+import { Pin, Trash2, Tag, MoreVertical, StickyNote } from "lucide-react";
+import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { cn } from "../../lib/cn";
 import type { Note } from "../../types";
 
@@ -130,9 +131,31 @@ export const NoteCard: React.FC<NoteCardProps> = ({
 
         {menuOpen && (
           <div
-            className="absolute right-0 top-7 z-50 w-32 bg-surface-0 dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-lg shadow-lg overflow-hidden"
+            className="absolute right-0 top-7 z-50 w-36 bg-surface-0 dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-lg shadow-lg overflow-hidden"
             onMouseLeave={() => setMenuOpen(false)}
           >
+            <button
+              onClick={() => {
+                new WebviewWindow(`sticky-${note.id}`, {
+                  url: `#${note.id}`,
+                  title: note.title || "Sticky Note",
+                  width: 320,
+                  height: 360,
+                  minWidth: 240,
+                  minHeight: 200,
+                  decorations: false,
+                  transparent: true,
+                  alwaysOnTop: true,
+                  resizable: true,
+                  center: false,
+                });
+                setMenuOpen(false);
+              }}
+              className="w-full flex items-center gap-2 px-3 py-2 text-xs text-surface-700 dark:text-surface-200 hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
+            >
+              <StickyNote size={11} />
+              Open as Sticky
+            </button>
             <button
               onClick={() => { onTogglePin(note.id); setMenuOpen(false); }}
               className="w-full flex items-center gap-2 px-3 py-2 text-xs text-surface-700 dark:text-surface-200 hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
