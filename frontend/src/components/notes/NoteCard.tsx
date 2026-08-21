@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Pin, Trash2, Tag, MoreVertical, StickyNote } from "lucide-react";
-import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { cn } from "../../lib/cn";
 import type { Note } from "../../types";
 
@@ -135,7 +134,8 @@ export const NoteCard: React.FC<NoteCardProps> = ({
             onMouseLeave={() => setMenuOpen(false)}
           >
             <button
-              onClick={() => {
+              onClick={async () => {
+                const { WebviewWindow } = await import("@tauri-apps/api/webviewWindow");
                 new WebviewWindow(`sticky-${note.id}`, {
                   url: `#${note.id}`,
                   title: note.title || "Sticky Note",
