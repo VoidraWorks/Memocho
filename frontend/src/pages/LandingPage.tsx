@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { open } from "@tauri-apps/plugin-opener";
+import { openUrl } from "@tauri-apps/plugin-opener";
 
 // ─── Google brand icon ────────────────────────────────────────────────────────
 const GoogleIcon: React.FC = () => (
@@ -23,7 +23,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoogleAuth }) => {
     try {
       const API_BASE =
         (import.meta.env.VITE_API_URL as string | undefined) ?? "http://localhost:8787";
-      await open(`${API_BASE}/api/auth/google`);
+      await openUrl(`${API_BASE}/api/auth/google`);
       onGoogleAuth();
     } catch {
       // handle error silently
@@ -64,9 +64,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoogleAuth }) => {
 
         <p className="lp-legal">
           By continuing you agree to our{" "}
-          <button className="lp-link" onClick={() => open("https://memocho.app/terms").catch(() => null)}>Terms</button>
+          <button className="lp-link" onClick={() => openUrl("https://memocho.app/terms").catch(() => null)}>Terms</button>
           {" "}and{" "}
-          <button className="lp-link" onClick={() => open("https://memocho.app/privacy").catch(() => null)}>Privacy Policy</button>.
+          <button className="lp-link" onClick={() => openUrl("https://memocho.app/privacy").catch(() => null)}>Privacy Policy</button>.
         </p>
       </div>
     </div>
