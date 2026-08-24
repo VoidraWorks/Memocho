@@ -3,10 +3,12 @@ import { listen } from "@tauri-apps/api/event";
 import { AppShell } from "./components/layout/AppShell";
 import { FloatingWindow } from "./components/layout/FloatingWindow";
 import { StickyNoteWindow } from "./components/sticky/StickyNoteWindow";
+import { LandingPage } from "./pages/LandingPage";
 import { useSettingsStore } from "./stores/settingsStore";
 import { useNotesStore } from "./stores/notesStore";
 import { useTasksStore } from "./stores/tasksStore";
 import { useUIStore } from "./stores/uiStore";
+import { useAuthStore } from "./stores/authStore";
 import { storage } from "./services/storage";
 import type { Note } from "./types";
 
@@ -19,6 +21,13 @@ function App() {
   const isFloating   = useUIStore((s) => s.isFloating);
   const toggleFloating = useUIStore((s) => s.toggleFloating);
   const setFloating  = useUIStore((s) => s.setFloating);
+
+  const { isLoggedIn, isLoading, hydrate } = useAuthStore();
+
+  // Hydrate auth state from localStorage on mount
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
 
   // Detect window mode on mount
   useEffect(() => {
@@ -83,6 +92,18 @@ function App() {
           onExpand={() => setFloating(false)}
           onClose={() => setFloating(false)}
         />
+      </div>
+    );
+  }
+
+  // Show landing page while auth is loading or user is not logged in
+  if (isLoading || !isLoggedIn) {
+    return (
+      <div className="h-screen w-screen">
+        <LandingPage onGoogleAuth={() => {
+          // OAuth flow opened in browser — user will complete sign-in there.
+          // The app can poll or wait for a deep-link callback to set auth state.
+        }} />
       </div>
     );
   }
