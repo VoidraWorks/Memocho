@@ -26,40 +26,58 @@ export const useTasksStore = create<TasksState>((set, get) => ({
   tasks: [],
   selectedDate: todayISO(),
 
-  loadTasks: () => {
-    set({ tasks: tasksService.getAll() });
+  loadTasks: async () => {
+    const tasks = await tasksService.getAll();
+    set({ tasks });
   },
 
   createTask: (input) => {
-    const task = tasksService.create(input);
-    set((s) => ({ tasks: [...s.tasks, task] }));
-    return task;
+    const optimisticTask = {
+      id: crypto.randomUUID(),
+      title: input.title,
+      description: input.description,
+      completed: false,
+      priority: input.priority ?? "none",
+      date: input.date,
+      order: 0,
+      pinned: false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    } as Task;
+    set((s) => ({ tasks: [...s.tasks, optimisticTask] }));
+    void tasksService.create(input).then((task) => {
+      set((s) => ({ tasks: s.tasks.map((entry) => (entry.id === optimisticTask.id ? task : entry)) }));
+    });
+    return optimisticTask;
   },
 
   updateTask: (id, input) => {
-    const updated = tasksService.update(id, input);
-    if (updated) {
-      set((s) => ({ tasks: s.tasks.map((t) => (t.id === id ? updated : t)) }));
-    }
+    void tasksService.update(id, input).then((updated) => {
+      if (updated) {
+        set((s) => ({ tasks: s.tasks.map((t) => (t.id === id ? updated : t)) }));
+      }
+    });
   },
 
   deleteTask: (id) => {
-    tasksService.delete(id);
+    void tasksService.delete(id);
     set((s) => ({ tasks: s.tasks.filter((t) => t.id !== id) }));
   },
 
   toggleComplete: (id) => {
-    const updated = tasksService.toggleComplete(id);
-    if (updated) {
-      set((s) => ({ tasks: s.tasks.map((t) => (t.id === id ? updated : t)) }));
-    }
+    void tasksService.toggleComplete(id).then((updated) => {
+      if (updated) {
+        set((s) => ({ tasks: s.tasks.map((t) => (t.id === id ? updated : t)) }));
+      }
+    });
   },
 
   togglePin: (id) => {
-    const updated = tasksService.togglePin(id);
-    if (updated) {
-      set((s) => ({ tasks: s.tasks.map((t) => (t.id === id ? updated : t)) }));
-    }
+    void tasksService.togglePin(id).then((updated) => {
+      if (updated) {
+        set((s) => ({ tasks: s.tasks.map((t) => (t.id === id ? updated : t)) }));
+      }
+    });
   },
 
   setPriority: (id, priority) => {
@@ -67,13 +85,14 @@ export const useTasksStore = create<TasksState>((set, get) => ({
   },
 
   reorderTasks: (date, orderedIds) => {
-    tasksService.reorder(date, orderedIds);
-    set((s) => {
-      const updated = s.tasks.map((t) => {
-        const idx = orderedIds.indexOf(t.id);
-        return t.date === date && idx !== -1 ? { ...t, order: idx } : t;
+    void tasksService.reorder(date, orderedIds).then(() => {
+      set((s) => {
+        const updated = s.tasks.map((t) => {
+          const idx = orderedIds.indexOf(t.id);
+          return t.date === date && idx !== -1 ? { ...t, order: idx } : t;
+        });
+        return { tasks: updated };
       });
-      return { tasks: updated };
     });
   },
 
