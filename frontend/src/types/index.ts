@@ -15,6 +15,7 @@ export interface Task {
   priority: Priority;
   date: string; // ISO date string YYYY-MM-DD
   order: number;
+  position?: number;
   pinned: boolean;
   createdAt: string;
   updatedAt: string;
