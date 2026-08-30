@@ -25,32 +25,34 @@ export const useNotesStore = create<NotesState>((set) => ({
   searchQuery: "",
   isSaving: false,
 
-  loadNotes: () => {
-    const notes = notesService.getAll();
+  loadNotes: async () => {
+    const notes = await notesService.getAll();
     set({ notes });
   },
 
   createNote: (input) => {
-    const note = notesService.create(input);
-    set((s) => ({ notes: [note, ...s.notes], currentNoteId: note.id }));
-    return note;
+    void notesService.create(input).then((note) => {
+      set((s) => ({ notes: [note, ...s.notes], currentNoteId: note.id }));
+    });
+    return { ...input, id: "pending", preview: "", pinned: false, tags: input.tags ?? [], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() } as Note;
   },
 
   updateNote: (id, input) => {
     set({ isSaving: true });
-    const updated = notesService.update(id, input);
-    if (updated) {
-      set((s) => ({
-        notes: s.notes.map((n) => (n.id === id ? updated : n)),
-        isSaving: false,
-      }));
-    } else {
-      set({ isSaving: false });
-    }
+    void notesService.update(id, input).then((updated) => {
+      if (updated) {
+        set((s) => ({
+          notes: s.notes.map((n) => (n.id === id ? updated : n)),
+          isSaving: false,
+        }));
+      } else {
+        set({ isSaving: false });
+      }
+    });
   },
 
   deleteNote: (id) => {
-    notesService.delete(id);
+    void notesService.delete(id);
     set((s) => ({
       notes: s.notes.filter((n) => n.id !== id),
       currentNoteId: s.currentNoteId === id ? null : s.currentNoteId,
@@ -60,10 +62,11 @@ export const useNotesStore = create<NotesState>((set) => ({
   },
 
   togglePin: (id) => {
-    const updated = notesService.togglePin(id);
-    if (updated) {
-      set((s) => ({ notes: s.notes.map((n) => (n.id === id ? updated : n)) }));
-    }
+    void notesService.togglePin(id).then((updated) => {
+      if (updated) {
+        set((s) => ({ notes: s.notes.map((n) => (n.id === id ? updated : n)) }));
+      }
+    });
   },
 
   setCurrentNote: (id) => set({ currentNoteId: id }),
