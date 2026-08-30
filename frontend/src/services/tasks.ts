@@ -1,79 +1,78 @@
-// ─── Tasks service — mock implementation (localStorage) ──────────────────────
+// ─── Tasks service — connected to the Worker API ─────────────────────────────
 
 import type { Task, CreateTaskInput, UpdateTaskInput } from "../types";
-import { storage } from "./storage";
-import { nanoid } from "./nanoid";
+import { apiClient } from "./api";
 
-const KEY = "tasks";
-
-function now() {
-  return new Date().toISOString();
+function normalizeTask(task: any): Task {
+  const order = task.position ?? task.order ?? 0;
+  return {
+    ...task,
+    description: task.description ?? undefined,
+    order,
+    position: order,
+  };
 }
 
 export const tasksService = {
-  getAll(): Task[] {
-    return storage.get<Task[]>(KEY, []);
+  async getAll(): Promise<Task[]> {
+    const result = await apiClient.get<{ tasks: Task[] }>("/api/tasks");
+    if (!result.success) return [];
+    return result.data.tasks.map(normalizeTask);
   },
 
-  getByDate(date: string): Task[] {
-    return this.getAll()
-      .filter((t) => t.date === date)
-      .sort((a, b) => a.order - b.order);
+  async getByDate(date: string): Promise<Task[]> {
+    const result = await apiClient.get<{ tasks: Task[] }>(`/api/tasks?date=${encodeURIComponent(date)}`);
+    if (!result.success) return [];
+    return result.data.tasks.map(normalizeTask);
   },
 
-  create(input: CreateTaskInput): Task {
-    const tasks = this.getAll();
-    const dateTaskCount = tasks.filter((t) => t.date === input.date).length;
-    const task: Task = {
-      id: nanoid(),
+  async create(input: CreateTaskInput): Promise<Task> {
+    const result = await apiClient.post<{ task: Task }>("/api/tasks", {
       title: input.title,
-      description: input.description,
-      completed: false,
-      priority: input.priority ?? "none",
+      description: input.description ?? null,
       date: input.date,
-      order: dateTaskCount,
+      priority: input.priority ?? "none",
       pinned: false,
-      createdAt: now(),
-      updatedAt: now(),
-    };
-    storage.set(KEY, [...tasks, task]);
-    return task;
-  },
-
-  update(id: string, input: UpdateTaskInput): Task | undefined {
-    const tasks = this.getAll();
-    const idx = tasks.findIndex((t) => t.id === id);
-    if (idx === -1) return undefined;
-    const updated: Task = { ...tasks[idx], ...input, updatedAt: now() };
-    tasks[idx] = updated;
-    storage.set(KEY, tasks);
-    return updated;
-  },
-
-  delete(id: string): void {
-    storage.set(KEY, this.getAll().filter((t) => t.id !== id));
-  },
-
-  toggleComplete(id: string): Task | undefined {
-    const task = this.getAll().find((t) => t.id === id);
-    if (!task) return undefined;
-    return this.update(id, { completed: !task.completed });
-  },
-
-  togglePin(id: string): Task | undefined {
-    const task = this.getAll().find((t) => t.id === id);
-    if (!task) return undefined;
-    return this.update(id, { pinned: !task.pinned });
-  },
-
-  reorder(_date: string, orderedIds: string[]): void {
-    const tasks = this.getAll();
-    orderedIds.forEach((id, idx) => {
-      const i = tasks.findIndex((t) => t.id === id);
-      if (i !== -1) {
-        tasks[i] = { ...tasks[i], order: idx, updatedAt: now() };
-      }
     });
-    storage.set(KEY, tasks);
+    if (!result.success) {
+      throw new Error(result.error.message);
+    }
+    return normalizeTask(result.data.task);
+  },
+
+  async update(id: string, input: UpdateTaskInput): Promise<Task | undefined> {
+    const result = await apiClient.put<{ task: Task }>(`/api/tasks/${id}`, input);
+    if (!result.success) return undefined;
+    return normalizeTask(result.data.task);
+  },
+
+  async delete(id: string): Promise<void> {
+    await apiClient.delete(`/api/tasks/${id}`);
+  },
+
+  async toggleComplete(id: string): Promise<Task | undefined> {
+    const existing = (await this.getAll()).find((task) => task.id === id);
+    if (!existing) return undefined;
+    return this.update(id, { completed: !existing.completed });
+  },
+
+  async togglePin(id: string): Promise<Task | undefined> {
+    const existing = (await this.getAll()).find((task) => task.id === id);
+    if (!existing) return undefined;
+    return this.update(id, { pinned: !existing.pinned });
+  },
+
+  async reorder(_date: string, orderedIds: string[]): Promise<void> {
+    const tasks = await this.getAll();
+    for (let index = 0; index < orderedIds.length; index += 1) {
+      const id = orderedIds[index];
+      const task = tasks.find((entry) => entry.id === id);
+      if (!task) continue;
+      await this.update(id, {
+        position: index,
+        order: index,
+        updatedAt: new Date().toISOString(),
+      });
+    }
   },
 };
