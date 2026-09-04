@@ -22,8 +22,7 @@ const DEFAULT_SETTINGS: Omit<UserSettings, "updatedAt"> = {
 function rowToSettings(row: UserSettingsRow): UserSettings {
   return {
     theme: row.theme as UserSettings["theme"],
-    fontSize: row.font_size as UserSettings["fontSize"],
-    background: row.background as UserSettings["background"],
+    fontSize: row.font_size as UserSettings["fontSizeckground"],
     gradientFrom: row.gradient_from,
     gradientTo: row.gradient_to,
     updatedAt: row.updated_at,
